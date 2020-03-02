@@ -7,7 +7,7 @@
     <h3 class="title">{{ news.title }}</h3>
     <small>{{ news.date }}</small>
 
-    <slot/>
+    <slot />
   </div>
 </template>
 
@@ -19,7 +19,7 @@ export default {
       required: true
     }
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>

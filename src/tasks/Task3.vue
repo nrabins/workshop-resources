@@ -2,12 +2,8 @@
   <div>
     <h1 class="text-2xl font-bold mb-4">Task 3: "Composition Over Inheritance"</h1>
     <ol class="steps">
-      <li>
-        Create the NewsEvent component that will handle the "event" type news from the newsFeed.
-      </li>
-      <li>
-        Similar to NewsAd and NewsPost, make use of the BaseNews component
-      </li>
+      <li>Create the NewsEvent component that will handle the "event" type news from the newsFeed.</li>
+      <li>Similar to NewsAd and NewsPost, make use of the BaseNews component</li>
     </ol>
 
     <div class="feeds">
@@ -24,12 +20,10 @@
             <small>{{ news.date }}</small>
 
             <template v-if="news.type === 'post'">
-              <blockquote class="quote">
-                {{ news.content }}
-              </blockquote>
+              <blockquote class="quote">{{ news.content }}</blockquote>
             </template>
             <template v-if="news.type === 'ad'">
-              <img class="banner" :src="news.image"/>
+              <img class="banner" :src="news.image" />
             </template>
             <template v-if="news.type === 'event'">
               <div class="event">
@@ -40,10 +34,7 @@
                 <p>{{ news.attendees }}</p>
 
                 <AppButton :type="news.attending ? 'primary' : 'secondary'">
-                  <AppIcon
-                    :icon="news.attending ? 'check' : 'plus'"
-                    class="mr-1"
-                  />
+                  <AppIcon :icon="news.attending ? 'check' : 'plus'" class="mr-1" />
                   {{ news.attending ? 'You’re attending' : 'Join!' }}
                 </AppButton>
               </div>
@@ -53,14 +44,16 @@
       </div>
 
       <!-- DESIRED USE PATTERN -->
-      <!-- <div class="feed">
+      <div class="feed">
         <Component
           v-for="news of newsFeed"
           :key="news.id"
           :is="getNewsTypeComponent(news.type)"
           :news="news"
+          @join="join"
+          @leave="leave"
         />
-      </div> -->
+      </div>
 
       <!-- TASK ENDS HERE -->
     </div>
@@ -68,38 +61,40 @@
 </template>
 
 <script>
-import newsFeed from '@/newsfeed.json'
-const NewsPost = () => import('@/components/NewsPost')
-const NewsAd = () => import('@/components/NewsAd')
-const NewsEvent = () => import('@/components/NewsEvent')
+import newsFeed from "@/newsfeed.json";
+const NewsPost = () => import("@/components/NewsPost");
+const NewsAd = () => import("@/components/NewsAd");
+const NewsEvent = () => import("@/components/NewsEvent");
 
 export default {
-  data () {
+  data() {
     return {
       newsFeed
-    }
+    };
   },
   methods: {
-    getNewsTypeComponent (type) {
+    getNewsTypeComponent(type) {
       switch (type) {
-        case 'post':
-          return NewsPost
-        case 'ad':
-          return NewsAd
-        case 'event':
-          return NewsEvent
+        case "post":
+          return NewsPost;
+        case "ad":
+          return NewsAd;
+        case "event":
+          return NewsEvent;
         default:
-          return NewsPost
+          return NewsPost;
       }
     },
-    join () {
-      alert('joining the event!')
+    join(news) {
+      // alert("joining the event!");
+      news.attending = true;
     },
-    leave () {
-      alert('leaving the event!')
+    leave(news) {
+      // alert("leaving the event!");
+      news.attending = false;
     }
   }
-}
+};
 </script>
 
 <style lang="sass">
